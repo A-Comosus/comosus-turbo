@@ -1,0 +1,28 @@
+{
+  "$schema": "https://turbo.build/schema.json",
+  "pipeline": {
+    "build": {
+      "dependsOn": ["^build"],
+      "outputs": ["dist/**", ".next/**"]
+    },
+    "docker-compose:up": {},
+    "dev": {
+      "cache": false
+    },
+    "lint": {
+      "outputs": []
+    },
+    "type-check": {},
+    "storybook": {},
+    "build-storybook": {},
+    "test": {},
+    "test:watch": {},
+    "test:ci": {
+      "dependsOn": ["build"]
+    },
+    "offline": {
+      "dependsOn": ["build"],
+      "cache": false
+    }
+  }
+}

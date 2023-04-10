@@ -1,0 +1,36 @@
+org: acomosus
+app: comosus-server
+service: comosus-server
+
+provider:
+  name: aws
+  stage: local
+  runtime: nodejs14.x
+  region: ap-southeast-2
+  apiGateway:
+    shouldStartNameWithService: true
+
+custom:
+  serverless-offline:
+    httpPort: 3100
+
+functions:
+  app:
+    handler: dist/main.handler
+    timeout: 10
+    events:
+      - http:
+          method: any
+          path: /{any+}
+
+# package:
+#   patterns:
+#     - '!node_modules/.prisma/client/libquery_engine-*'
+#     - 'node_modules/.prisma/client/schema.prisma'
+#     - 'prisma/schema.prisma'
+#     - 'node_modules/.prisma/client/libquery_engine-rhel-*'
+#     - '!node_modules/prisma/libquery_engine-*'
+#     - '!node_modules/@prisma/engines/**'
+
+plugins:
+  - serverless-offline

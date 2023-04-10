@@ -1,0 +1,32 @@
+{
+  "name": "comosus-turbo",
+  "version": "0.0.0",
+  "private": true,
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "build": "turbo run build",
+    "dev": "turbo run dev --parallel",
+    "lint": "turbo run lint",
+    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
+    "storybook": "turbo run storybook",
+    "type-check": "turbo run type-check",
+    "test": "turbo run test --parallel",
+    "test:watch": "turbo run test:watch --parallel",
+    "test:ci": "turbo run test:ci --parallel",
+    "sls:offline": "turbo run offline --filter=@comosus/server",
+    "docker-compose:up": "turbo run docker-compose:up"
+  },
+  "devDependencies": {
+    "@comosus/config-eslint": "*",
+    "prettier": "2.8.7",
+    "turbo": "1.8.8"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "dependencies": {},
+  "packageManager": "yarn@1.22.19"
+}

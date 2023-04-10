@@ -1,0 +1,12 @@
+{
+  "name": "@comosus/config-playwright",
+  "version": "0.0.0",
+  "license": "MIT",
+  "files": [
+    "playwright.config.ts"
+  ],
+  "devDependencies": {
+    "@playwright/test": "^1.32.2",
+    "start-server-and-test": "^2.0.0"
+  }
+}

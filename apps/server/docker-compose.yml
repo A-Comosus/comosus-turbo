@@ -1,0 +1,49 @@
+version: '3.3'
+services:
+  cockroach-0:
+    image: cockroachdb/cockroach:latest
+    networks:
+      - roachnet
+    command: start --insecure --join=cockroach-0,cockroach-1,cockroach-2
+    ports:
+      - '26257:26257'
+      - '8080:8080'
+    volumes:
+      - cockroach-data:/cockroach/cockroach-data-0
+    deploy:
+      replicas: 1
+      placement:
+        constraints:
+          - node.hostname == node1
+
+  cockroach-1:
+    image: cockroachdb/cockroach:latest
+    networks:
+      - roachnet
+    command: start --insecure --join=cockroach-0,cockroach-1,cockroach-2
+    volumes:
+      - cockroach-data:/cockroach/cockroach-data-1
+    deploy:
+      replicas: 1
+      placement:
+        constraints:
+          - node.hostname == node2
+
+  cockroach-2:
+    image: cockroachdb/cockroach:latest
+    networks:
+      - roachnet
+    command: start --insecure --join=cockroach-0,cockroach-1,cockroach-2
+    volumes:
+      - cockroach-data:/cockroach/cockroach-data-2
+    deploy:
+      replicas: 1
+      placement:
+        constraints:
+          - node.hostname == node3
+
+networks:
+  roachnet:
+
+volumes:
+  cockroach-data:

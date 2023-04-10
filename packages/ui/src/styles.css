@@ -1,0 +1,23 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --text-light: 255, 255, 255;
+    --border-radius: 12px;
+    --tile-start-rgb: 2, 13, 46;
+    --tile-end-rgb: 2, 5, 19;
+  }
+
+  @media (prefers-color-scheme: light) {
+    html {
+      color-scheme: dark;
+    }
+    :root {
+      --text-color-primary: 0, 0, 0;
+      --tile-start-rgb: 239, 245, 249;
+      --tile-end-rgb: 228, 232, 233;
+    }
+  }
+}
