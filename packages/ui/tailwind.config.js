@@ -46,8 +46,11 @@ const colors = {
 };
 
 const gradients = {
-  'gradient-vertical': `linear-gradient(180deg, ${colors.primary[600]} 0%, ${colors.primary[700]} 97.92%)`,
-  'gradient-horizontal': `linear-gradient(90deg, ${colors.primary[600]} 0%, ${colors.primary[700]} 100%)`,
+  'gradient-vertical-300': `linear-gradient(180deg, ${colors.primary[300]} 0%, ${colors.primary[400]} 100%)`,
+  'gradient-vertical-400': `linear-gradient(180deg, ${colors.primary[400]} 0%, ${colors.primary[500]} 100%)`,
+  'gradient-vertical-500': `linear-gradient(180deg, ${colors.primary[500]} 0%, ${colors.primary[600]} 100%)`,
+  'gradient-horizontal-400': `linear-gradient(90deg, ${colors.primary[400]} 0%, ${colors.primary[500]} 100%)`,
+  'gradient-horizontal-500': `linear-gradient(90deg, ${colors.primary[500]} 0%, ${colors.primary[600]} 100%)`,
 };
 
 const fontSize = {
@@ -62,6 +65,12 @@ const fontSize = {
   'body-xs': ['0.625rem', '120%'],
 };
 
+const boxShadow = {
+  'glow-md': '0px 0px 8px',
+  'glow-lg': '0px 0px 12px',
+  'inset-2': `inset 0 0 0 .125rem`,
+};
+
 module.exports = {
   prefix: 'ui-',
   content: ['./src/**/*.{js,ts,jsx,tsx}'],
@@ -73,6 +82,7 @@ module.exports = {
         ...gradients,
       },
       fontSize,
+      boxShadow,
     },
   },
   plugins: [],

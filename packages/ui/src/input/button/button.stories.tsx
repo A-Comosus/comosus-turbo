@@ -35,8 +35,9 @@ export const Default: ComponentStory<typeof Button> = (args) => (
 
 export const Variants = () => (
   <Stack>
-    <Button variant="primary">Primary</Button>
-    <Button variant="accent">Accent</Button>
+    <Button variant="primary">Button</Button>
+    <Button variant="accent">Button</Button>
+    <Button variant="gradient">Button</Button>
   </Stack>
 );
 
@@ -50,10 +51,13 @@ export const Sizes = () => (
 
 export const Disabled = () => (
   <Stack>
-    <Button isDisabled variant="primary">
+    <Button disabled variant="primary">
       Primary
     </Button>
-    <Button isDisabled variant="accent">
+    <Button disabled variant="accent">
+      Accent
+    </Button>
+    <Button disabled variant="gradient">
       Accent
     </Button>
   </Stack>
