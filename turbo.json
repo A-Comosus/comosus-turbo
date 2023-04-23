@@ -6,6 +6,7 @@
       "outputs": ["dist/**", ".next/**"]
     },
     "docker-compose:up": {},
+    "docker-compose:down": {},
     "dev": {
       "cache": false
     },

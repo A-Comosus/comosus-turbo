@@ -17,7 +17,8 @@
     "test:watch": "turbo run test:watch --parallel",
     "test:ci": "turbo run test:ci --parallel",
     "sls:offline": "turbo run offline --filter=@comosus/server",
-    "docker-compose:up": "turbo run docker-compose:up"
+    "docker-compose:up": "turbo run docker-compose:up",
+    "docker-compose:down": "turbo run docker-compose:down"
   },
   "devDependencies": {
     "@comosus/config-eslint": "*",
