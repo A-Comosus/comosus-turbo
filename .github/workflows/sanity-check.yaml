@@ -11,10 +11,6 @@ jobs:
     name: Prepare runner for actions
     runs-on: ubuntu-latest
     steps:
-      - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
-      - run: echo "🐧 This job is now running on a ${{ runner.os }} server hosted by GitHub!"
-      - run: echo "🔎 The name of your branch is ${{ github.ref }} and your repository is ${{ github.repository }}."
-
       - uses: actions/checkout@v3
 
       - name: Set up yarn
@@ -23,18 +19,12 @@ jobs:
           node-version: 16
           cache: 'yarn'
 
-      - name: Set up cache
-        id: cache
-        uses: actions/cache@v3
-        with:
-          path: '**/node_modules'
-          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-yarn-
-
       - name: Install dependencies
         run: yarn install
+        shell: bash
+
       - run: echo "🚚 All dependencies listed has been installed on the runner."
+        shell: bash
 
   linting-code:
     needs: prepare
@@ -49,23 +39,9 @@ jobs:
           node-version: 16
           cache: 'yarn'
 
-      - name: Set up cache
-        uses: actions/cache@v3
-        with:
-          path: '**/node_modules'
-          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-yarn-
-
-      - name: Install dependencies
-        run: yarn install
-      - run: echo "🚚 All dependencies listed has been installed on the runner."
-
       - name: Checking for linter error
         run: yarn lint
       - run: echo "📝 Linter check completes!"
-
-      - run: echo "🍏 This job has finished with status - ${{ job.status }}."
 
   checking-types:
     needs: prepare
@@ -80,23 +56,9 @@ jobs:
           node-version: 16
           cache: 'yarn'
 
-      - name: Set up cache
-        uses: actions/cache@v3
-        with:
-          path: '**/node_modules'
-          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-yarn-
-
-      - name: Install dependencies
-        run: yarn install
-      - run: echo "🚚 All dependencies listed has been installed on the runner."
-
       - name: Checking for typescript error
         run: yarn type-check
       - run: echo "📝 Type check completes!"
-
-      - run: echo "🍏 This job has finished with status - ${{ job.status }}."
 
   testing-codes:
     needs: prepare
@@ -111,23 +73,9 @@ jobs:
           node-version: 16
           cache: 'yarn'
 
-      - name: Set up cache
-        uses: actions/cache@v3
-        with:
-          path: '**/node_modules'
-          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-yarn-
-
-      - name: Install dependencies
-        run: yarn install
-      - run: echo "🚚 All dependencies listed has been installed on the runner."
-
       - name: Install Playwright Browsers
         run: yarn playwright install --with-deps
 
       - name: Testing your code
         run: yarn test:ci
       - run: echo "🧪 Code test completes!"
-
-      - run: echo "🍏 This job has finished with status - ${{ job.status }}."

@@ -1,0 +1,17 @@
+name: 'Set up yarn'
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Set up yarn
+      uses: actions/setup-node@v3
+      with:
+        node-version: 16
+        cache: 'yarn'
+
+    - name: Install dependencies
+      run: yarn install
+      shell: bash
+
+    - run: echo "🚚 All dependencies listed has been installed on the runner."
+      shell: bash
