@@ -1,2 +1,2 @@
-export * from './response.dto';
+export * from '../../../utils/response.dto';
 export * from './app.dto';
