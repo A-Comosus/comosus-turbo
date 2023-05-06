@@ -20,6 +20,7 @@ export function validate(config: Record<string, unknown>) {
         .default('3100'),
       IS_OFFLINE: z.string().default('false'),
       DATABASE_URL: z.string(),
+      JWT_SECRET: z.string(),
     });
 
     return schema.parse(config);

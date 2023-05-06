@@ -12,4 +12,8 @@ export class ConfigService {
   get isSlsOffline(): boolean {
     return this.configService.get('IS_OFFLINE') === 'true';
   }
+
+  get jwtSecret(): string {
+    return this.configService.get('JWT_SECRET');
+  }
 }

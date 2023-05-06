@@ -4,7 +4,8 @@ import { GraphQLModule } from '@nestjs/graphql';
 import { join } from 'path';
 import { AppResolver } from './app.resolver';
 import { AppService } from './app.service';
-import { ConfigModule, LoggerModule, PrismaModule } from '../system';
+import { ConfigModule, LoggerModule, PrismaModule } from '@src/module/system';
+import { AuthModule } from '@src/module/auth/';
 
 const SystemModules = [
   PrismaModule,
@@ -18,8 +19,10 @@ const SystemModules = [
   }),
 ];
 
+const ServiceModules = [AuthModule];
+
 @Module({
-  imports: [...SystemModules],
+  imports: [...SystemModules, ...ServiceModules],
   providers: [AppResolver, AppService],
 })
 export class AppModule {}
