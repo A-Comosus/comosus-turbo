@@ -1,4 +1,4 @@
-import { Logger } from '@nestjs/common';
+import { Logger, ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { ExpressAdapter } from '@nestjs/platform-express';
 import { Context } from 'aws-lambda';
@@ -11,6 +11,7 @@ import {
   LoggerService,
   PrismaService,
 } from '@src/module/system';
+import { GlobalExceptionFilter } from './filter/exception.filter';
 
 let cachedServer: Server;
 
@@ -23,6 +24,9 @@ async function createExpressApp(expressApp: Express) {
   );
 
   app.useLogger(app.get(LoggerService));
+
+  app.useGlobalPipes(new ValidationPipe());
+  app.useGlobalFilters(new GlobalExceptionFilter());
 
   const prismaService = app.get(PrismaService);
   await prismaService.enableShutdownHook(app);
