@@ -6,8 +6,6 @@ import {
   RegisterInput,
   RegisterResponseDTO,
 } from './dto';
-import { UseGuards } from '@nestjs/common';
-import { JwtGuard } from '@src/guard';
 
 @Resolver()
 export class AuthResolver {
@@ -19,7 +17,6 @@ export class AuthResolver {
   }
 
   @Mutation(() => LoginResponseDTO)
-  @UseGuards(JwtGuard)
   login(@Args('input') input: LoginInput) {
     return this.authService.login(input);
   }

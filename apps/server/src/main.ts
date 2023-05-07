@@ -6,12 +6,10 @@ import { createServer, proxy, Response } from 'aws-serverless-express';
 import express, { Express } from 'express';
 import { Server } from 'http';
 import { AppModule } from '@src/module/app';
-import {
-  ConfigService,
-  LoggerService,
-  PrismaService,
-} from '@src/module/system';
-import { GlobalExceptionFilter } from './filter/exception.filter';
+import { ConfigService } from '@src/system/config';
+import { LoggerService } from '@src/system/logger';
+import { PrismaService } from '@src/system/prisma';
+import { GlobalExceptionFilter } from '@src/system/filter';
 
 let cachedServer: Server;
 

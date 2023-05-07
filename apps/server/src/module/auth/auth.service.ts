@@ -6,7 +6,7 @@ import {
   RegisterResponseDTO,
 } from './dto';
 import { JwtService } from '@nestjs/jwt';
-import { ConfigService } from '@src/module/system';
+import { ConfigService } from '@src/system/config';
 
 @Injectable()
 export class AuthService {

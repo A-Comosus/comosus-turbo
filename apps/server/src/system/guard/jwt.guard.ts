@@ -7,8 +7,8 @@ import {
 import { Reflector } from '@nestjs/core';
 import { GqlExecutionContext } from '@nestjs/graphql';
 import { JwtService } from '@nestjs/jwt';
-import { IS_PUBLIC_KEY } from '@src/decorator';
-import { ConfigService } from '@src/module/system';
+import { IS_PUBLIC_KEY } from '@src/system/decorator';
+import { ConfigService } from '@src/system/config';
 
 @Injectable()
 export class JwtGuard implements CanActivate {
