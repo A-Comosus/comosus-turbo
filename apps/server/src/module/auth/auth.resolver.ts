@@ -13,7 +13,7 @@ export class AuthResolver {
 
   @Mutation(() => RegisterResponseDTO)
   register(@Args('input') input: RegisterInput) {
-    return this.authService.regiser(input);
+    return this.authService.register(input);
   }
 
   @Mutation(() => LoginResponseDTO)

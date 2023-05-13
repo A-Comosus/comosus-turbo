@@ -8,8 +8,12 @@ import { Server } from 'http';
 import { AppModule } from '@src/module/app';
 import { ConfigService } from '@src/system/config';
 import { LoggerService } from '@src/system/logger';
-import { PrismaService } from '@src/system/prisma';
-import { GlobalExceptionFilter } from '@src/system/filter';
+import { PrismaKnownErrorFilter, PrismaService } from '@src/system/prisma';
+import {
+  GlobalExceptionFilter,
+  UnauthorizedExceptionFilter,
+} from '@src/system/filter';
+import 'json-bigint-patch';
 
 let cachedServer: Server;
 
@@ -23,8 +27,10 @@ async function createExpressApp(expressApp: Express) {
 
   app.useLogger(app.get(LoggerService));
 
-  app.useGlobalPipes(new ValidationPipe());
+  app.useGlobalPipes(new ValidationPipe({ transform: true }));
   app.useGlobalFilters(new GlobalExceptionFilter());
+  app.useGlobalFilters(new PrismaKnownErrorFilter());
+  app.useGlobalFilters(new UnauthorizedExceptionFilter());
 
   const prismaService = app.get(PrismaService);
   await prismaService.enableShutdownHook(app);

@@ -1,68 +1,63 @@
 import { Injectable, Logger } from '@nestjs/common';
 import {
   LoginInput,
-  LoginResponseDTO,
+  LoginSuccess,
   RegisterInput,
-  RegisterResponseDTO,
+  RegisterSuccess,
 } from './dto';
 import { JwtService } from '@nestjs/jwt';
-import { ConfigService } from '@src/system/config';
+import { UserService } from '@src/module/user';
+import { ResponseError } from '@src/utils';
+import bcrypt from 'bcrypt';
 
 @Injectable()
 export class AuthService {
   readonly logger = new Logger(AuthService.name);
 
   constructor(
-    private configService: ConfigService,
     private jwtService: JwtService,
+    private userService: UserService,
   ) {}
 
   private async generateJWT(payload: string | object | Buffer) {
     return await this.jwtService.signAsync(payload);
   }
 
-  async regiser(input: RegisterInput): Promise<typeof RegisterResponseDTO> {
-    try {
-      const accessToken = await this.generateJWT(input);
-      const user = 'some user';
-      return {
-        result: 'success',
-        message: 'Registration successful',
-        data: {
-          accessToken,
-          user,
-        },
-      };
-    } catch (error) {
-      return {
-        result: 'error',
-        message: 'Registration failed',
-      };
-    }
+  async register(input: RegisterInput) {
+    if (!input.acceptTerms)
+      return new ResponseError('User did not accept terms and conditions');
+
+    const password = await bcrypt.hash(input.password, 10);
+    const user = await this.userService.create({ ...input, password });
+
+    const accessToken = await this.generateJWT({
+      sub: user.id,
+      email: user.email,
+      username: user.username,
+    });
+
+    return new RegisterSuccess('Registration successful', {
+      accessToken,
+      user,
+    });
   }
 
-  async login(input: LoginInput): Promise<typeof LoginResponseDTO> {
-    try {
-      // check if user exists
-      const user = 'some user';
+  async login(input: LoginInput) {
+    const user = await this.userService.findOneByEmail(input.email);
+    if (!user) return new ResponseError(`Credential does not match`);
 
-      // check if password match
-      // give him a token and return the user object
-      const accessToken = await this.generateJWT(input);
+    const isValidLogin = await bcrypt.compare(input.password, user.password);
+    if (!isValidLogin) return new ResponseError(`Credential does not match`);
 
-      return {
-        result: 'success',
-        message: 'Login successful',
-        data: {
-          accessToken,
-          user,
-        },
-      };
-    } catch (error) {
-      return {
-        result: 'error',
-        message: 'Login failed',
-      };
-    }
+    const accessToken = await this.generateJWT({
+      sub: user.id,
+      email: user.email,
+      username: user.username,
+    });
+
+    return new LoginSuccess('Login successful', {
+      accessToken,
+      user,
+    });
   }
 }

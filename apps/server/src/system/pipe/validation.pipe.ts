@@ -23,6 +23,8 @@ export class ValidationPipe implements PipeTransform {
 
     if (metatype || this.isNativeType({ metatype })) return value;
 
+    console.log('this is validation pipe', value);
+
     const object = plainToInstance(metatype, value);
     const errors = await validate(object);
     if (errors.length > 0) {

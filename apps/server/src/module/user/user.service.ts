@@ -1,26 +1,58 @@
-import { Injectable } from '@nestjs/common';
-import { CreateUserInput } from './dto/create-user.input';
-import { UpdateUserInput } from './dto/update-user.input';
+import { Injectable, Logger, UseFilters } from '@nestjs/common';
+import { PrismaKnownErrorFilter, PrismaService } from '@src/system/prisma';
+import { RegisterInput } from '../auth/dto';
+import { DeleteUserDTO, DeleteUserInput, FindAllUserSuccess } from './dto';
 
 @Injectable()
+@UseFilters(PrismaKnownErrorFilter)
 export class UserService {
-  create(createUserInput: CreateUserInput) {
-    return 'This action adds a new user';
+  private readonly logger = new Logger(UserService.name);
+  constructor(private prismaService: PrismaService) {}
+
+  async create(newUser: RegisterInput) {
+    this.logger.debug(`Creating new user with email ${newUser.email}...`);
+    const user = await this.prismaService.user.create({
+      data: {
+        ...newUser,
+        username: null,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+    });
+    this.logger.debug(`New user created with email ${newUser.email}...`);
+    return user;
   }
 
-  findAll() {
-    return `This action returns all user`;
+  async findAll() {
+    this.logger.debug('Listing all users...');
+    const users = await this.prismaService.user.findMany();
+    return new FindAllUserSuccess('This is list of all users', users);
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} user`;
+  async findOneByEmail(email: string) {
+    this.logger.debug(`Searching for user with email ${email}...`);
+    const user = await this.prismaService.user.findFirst({
+      where: {
+        email,
+      },
+    });
+    this.logger.debug(`Found user with email ${email}...`);
+    return user;
   }
 
-  update(id: number, updateUserInput: UpdateUserInput) {
-    return `This action updates a #${id} user`;
-  }
+  async remove({ id }: DeleteUserInput): Promise<typeof DeleteUserDTO> {
+    this.logger.debug(`Deleting user with id ${id}...`);
+    const user = await this.prismaService.user.delete({
+      where: {
+        id: BigInt(id),
+      },
+    });
 
-  remove(id: number) {
-    return `This action removes a #${id} user`;
+    this.logger.debug(`Deleted user with id ${id}...`);
+    return {
+      result: 'success',
+      message: 'User deleted successfully',
+      data: user,
+    };
   }
 }

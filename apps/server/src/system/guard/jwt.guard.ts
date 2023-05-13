@@ -50,10 +50,9 @@ export class JwtGuard implements CanActivate {
       });
 
       request['user'] = payload;
+      return true;
     } catch (error) {
       throw new UnauthorizedException();
     }
-
-    return true;
   }
 }

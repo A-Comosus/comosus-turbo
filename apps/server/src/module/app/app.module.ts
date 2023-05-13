@@ -8,6 +8,7 @@ import { ConfigModule } from '@src/system/config';
 import { LoggerModule } from '@src/system/logger';
 import { PrismaModule } from '@src/system/prisma';
 import { AuthModule } from '@src/module/auth/';
+import { BigIntResolver } from 'graphql-scalars';
 
 const SystemModules = [
   PrismaModule,
@@ -18,6 +19,9 @@ const SystemModules = [
     autoSchemaFile: join(process.cwd(), 'src/schema/schema.gql'),
     sortSchema: true,
     introspection: true,
+    resolvers: {
+      BigInt: BigIntResolver,
+    },
   }),
 ];
 

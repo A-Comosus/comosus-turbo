@@ -1,4 +1,5 @@
 import { Field, InputType, ObjectType, createUnionType } from '@nestjs/graphql';
+import { UserDTO } from '@src/module/user';
 import { ResponseError, ResponseSuccess, resolveResponse } from '@src/utils';
 import { IsBoolean, IsEmail, IsNotEmpty, Matches } from 'class-validator';
 
@@ -34,12 +35,12 @@ class Authenticated {
   @Field()
   accessToken: string;
 
-  @Field()
-  user: string;
+  @Field(() => UserDTO)
+  user: UserDTO;
 }
 
 @ObjectType()
-class RegisterSuccess extends ResponseSuccess(Authenticated) {}
+export class RegisterSuccess extends ResponseSuccess(Authenticated) {}
 
 export const RegisterResponseDTO = createUnionType({
   name: 'RegisterResponse',
@@ -53,7 +54,7 @@ export const RegisterResponseDTO = createUnionType({
 });
 
 @ObjectType()
-class LoginSuccess extends ResponseSuccess(Authenticated) {}
+export class LoginSuccess extends ResponseSuccess(Authenticated) {}
 
 export const LoginResponseDTO = createUnionType({
   name: 'LoginResponse',
