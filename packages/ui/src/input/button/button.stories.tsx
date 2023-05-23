@@ -8,7 +8,6 @@ export default {
   component: Button,
   args: {
     children: 'Button',
-    size: 'md',
   },
 } as ComponentMeta<typeof Button>;
 
@@ -43,9 +42,9 @@ export const Variants = () => (
 
 export const Sizes = () => (
   <Stack>
-    <Button size="lg">Button</Button>
-    <Button size="md">Button</Button>
     <Button size="sm">Button</Button>
+    <Button size="md">Button</Button>
+    <Button size="lg">Button</Button>
   </Stack>
 );
 

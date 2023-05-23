@@ -1,5 +1,7 @@
+/** @type {import('tailwindcss').Config} */
+
+const sharedConfig = require('@comosus/config-tailwind/tailwind.config');
+
 module.exports = {
-  content: ['./src/**/*.{js,ts,jsx,tsx}'],
-  theme: {},
-  plugins: [],
+  presets: [sharedConfig],
 };

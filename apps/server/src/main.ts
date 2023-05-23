@@ -23,6 +23,11 @@ async function createExpressApp(expressApp: Express) {
   const app = await NestFactory.create(
     AppModule,
     new ExpressAdapter(expressApp),
+    {
+      cors: {
+        origin: ['http://localhost:3000'],
+      },
+    },
   );
 
   app.useLogger(app.get(LoggerService));

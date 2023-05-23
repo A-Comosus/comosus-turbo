@@ -1,0 +1,7 @@
+{
+  "name": "@comosus/config-tailwind",
+  "version": "0.0.0",
+  "main": "index.ts",
+  "scripts": {},
+  "license": "MIT"
+}
