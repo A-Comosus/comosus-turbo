@@ -1,5 +1,6 @@
 'use client';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { useAPIClientStore } from '@src/store';
+import { QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import React from 'react';
 
@@ -8,7 +9,7 @@ export function QueryClientContainer({
 }: {
   children: React.ReactNode;
 }) {
-  const queryClient = new QueryClient();
+  const queryClient = useAPIClientStore((state) => state.queryClient);
   return (
     <QueryClientProvider client={queryClient}>
       {children}

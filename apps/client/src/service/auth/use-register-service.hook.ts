@@ -4,11 +4,7 @@ import { ResponseError } from '@src/.generated/graphql.api';
 import { useRegisterMutation } from '@src/.generated/graphql.api';
 import { useAPIClientStore } from '@src/store';
 import { useState } from 'react';
-
-type ServiceHook<TResponse, TError> = {
-  onSuccess?: (response: TResponse) => void;
-  onError?: (error: TError) => void;
-};
+import { ServiceHook } from '..';
 
 export function useRegisterService(
   action?: ServiceHook<RegisterSuccess, ResponseError>,
@@ -19,9 +15,7 @@ export function useRegisterService(
   const { mutate: register, isLoading: isRegistering } = useRegisterMutation(
     gqlClient,
     {
-      onSuccess: (data) => {
-        const { register } = data;
-
+      onSuccess: ({ register }) => {
         switch (register.__typename) {
           case 'RegisterSuccess':
             setAccessToken(register.data.accessToken);

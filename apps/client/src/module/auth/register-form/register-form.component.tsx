@@ -1,5 +1,4 @@
 'use client';
-import React from 'react';
 import { TextInput, Button, Checkbox, ErrorMessage } from '@comosus/ui';
 import { Icon } from '@iconify/react';
 import { useRegisterForm } from './use-register-form.hook';

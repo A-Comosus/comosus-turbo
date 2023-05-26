@@ -30,6 +30,13 @@ mutation Login($input: LoginInput!) {
       message
       data {
         accessToken
+        user {
+          id
+          email
+          username
+          createdAt
+          updatedAt
+        }
       }
     }
     ... on ResponseError {
