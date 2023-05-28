@@ -8,7 +8,7 @@ class App {
 }
 
 @ObjectType()
-class AppResponseSuccess extends ResponseSuccess(App) {}
+export class AppResponseSuccess extends ResponseSuccess(App) {}
 
 export const AppResponseDTO = createUnionType({
   name: 'AppResponse',

@@ -1,22 +1,16 @@
 import { Injectable } from '@nestjs/common';
-import { AppResponseDTO } from './dto';
+import { AppResponseDTO, AppResponseSuccess } from './dto';
+import { ResponseError } from '@src/utils';
 
 @Injectable()
 export class AppService {
   getAppStatus(): typeof AppResponseDTO {
     try {
-      return {
-        result: 'success',
-        message: 'Request successful',
-        data: {
-          status: 'up',
-        },
-      };
+      return new AppResponseSuccess('Request successful', {
+        status: 'up',
+      });
     } catch (error) {
-      return {
-        result: 'error',
-        message: error.message,
-      };
+      return new ResponseError(error.message);
     }
   }
 }
