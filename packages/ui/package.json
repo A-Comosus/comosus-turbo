@@ -28,6 +28,7 @@
     "@babel/core": "^7.20.2",
     "@comosus/config-eslint": "*",
     "@comosus/config-jest": "*",
+    "@comosus/config-tailwind": "*",
     "@comosus/config-ts": "*",
     "@storybook/addon-actions": "^6.5.13",
     "@storybook/addon-essentials": "^6.5.13",
@@ -49,7 +50,7 @@
     "next": "^13.1.6",
     "postcss": "^8.4.21",
     "prettier": "^2.8.7",
-    "prettier-plugin-tailwindcss": "^0.2.6",
+    "prettier-plugin-tailwindcss": "^0.2.8",
     "react": "^18.2.0",
     "tailwindcss": "^3.3.1",
     "tsconfig-paths-webpack-plugin": "^4.0.1",
@@ -57,6 +58,8 @@
     "typescript": "^4.5.2"
   },
   "dependencies": {
+    "@iconify/react": "^4.1.0",
+    "@radix-ui/react-checkbox": "^1.0.3",
     "@radix-ui/react-radio-group": "1.1.2",
     "@radix-ui/react-switch": "1.0.2",
     "classnames": "^2.3.2",

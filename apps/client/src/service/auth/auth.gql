@@ -1,0 +1,47 @@
+mutation Register($input: RegisterInput!) {
+  register(input: $input) {
+    __typename
+    ... on RegisterSuccess {
+      result
+      message
+      data {
+        accessToken
+        user {
+          id
+          email
+          username
+          createdAt
+          updatedAt
+        }
+      }
+    }
+    ... on ResponseError {
+      result
+      message
+    }
+  }
+}
+
+mutation Login($input: LoginInput!) {
+  login(input: $input) {
+    __typename
+    ... on LoginSuccess {
+      result
+      message
+      data {
+        accessToken
+        user {
+          id
+          email
+          username
+          createdAt
+          updatedAt
+        }
+      }
+    }
+    ... on ResponseError {
+      result
+      message
+    }
+  }
+}

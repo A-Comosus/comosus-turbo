@@ -1,6 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { AppResolver } from './app.resolver';
 import { AppService } from './app.service';
+import { AppResponseSuccess } from './dto';
 
 describe('AppResolver', () => {
   let appResolver: AppResolver;
@@ -15,8 +16,14 @@ describe('AppResolver', () => {
   });
 
   describe('root', () => {
-    it('should return "Hello World!"', () => {
-      expect(appResolver.hello()).toBe('Hello World!');
+    it('should return "Hello World!"', async () => {
+      const result = await appResolver.getAppStatus();
+
+      console.log(result);
+
+      expect(result).toStrictEqual(
+        new AppResponseSuccess('Request successful', { status: 'up' }),
+      );
     });
   });
 });

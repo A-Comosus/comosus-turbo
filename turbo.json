@@ -1,12 +1,17 @@
 {
   "$schema": "https://turbo.build/schema.json",
+  "globalEnv": ["NEXT_PUBLIC_GRAPHQL_ENDPOINT"],
   "pipeline": {
     "build": {
       "dependsOn": ["^build"],
       "outputs": ["dist/**", ".next/**"]
     },
-    "docker-compose:up": {},
-    "docker-compose:down": {},
+    "docker-compose:up": {
+      "cache": false
+    },
+    "docker-compose:down": {
+      "cache": false
+    },
     "dev": {
       "cache": false
     },
@@ -14,7 +19,6 @@
       "outputs": []
     },
     "type-check": {},
-    "storybook": {},
     "build-storybook": {},
     "test": {},
     "test:watch": {},

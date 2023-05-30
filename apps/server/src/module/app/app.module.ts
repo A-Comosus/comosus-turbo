@@ -4,7 +4,11 @@ import { GraphQLModule } from '@nestjs/graphql';
 import { join } from 'path';
 import { AppResolver } from './app.resolver';
 import { AppService } from './app.service';
-import { ConfigModule, LoggerModule, PrismaModule } from '../system';
+import { ConfigModule } from '@src/system/config';
+import { LoggerModule } from '@src/system/logger';
+import { PrismaModule } from '@src/system/prisma';
+import { AuthModule } from '@src/module/auth/';
+import { BigIntResolver } from 'graphql-scalars';
 
 const SystemModules = [
   PrismaModule,
@@ -15,11 +19,16 @@ const SystemModules = [
     autoSchemaFile: join(process.cwd(), 'src/schema/schema.gql'),
     sortSchema: true,
     introspection: true,
+    resolvers: {
+      BigInt: BigIntResolver,
+    },
   }),
 ];
 
+const ServiceModules = [AuthModule];
+
 @Module({
-  imports: [...SystemModules],
+  imports: [...SystemModules, ...ServiceModules],
   providers: [AppResolver, AppService],
 })
 export class AppModule {}

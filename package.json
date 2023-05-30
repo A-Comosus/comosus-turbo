@@ -7,11 +7,16 @@
     "packages/*"
   ],
   "scripts": {
-    "build": "turbo run build",
     "dev": "turbo run dev --parallel",
+    "dev:client": "turbo run dev --filter=@comosus/client",
+    "dev:server": "turbo run dev --filter=@comosus/server",
+    "dev:ui": "turbo run dev --filter=@comosus/ui",
+    "build": "turbo run build",
+    "build:client": "turbo run build --filter=@comosus/client",
+    "build:server": "turbo run build --filter=@comosus/server",
+    "build:ui": "turbo run build --filter=@comosus/ui",
     "lint": "turbo run lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
-    "storybook": "turbo run storybook",
     "type-check": "turbo run type-check",
     "test": "turbo run test --parallel",
     "test:watch": "turbo run test:watch --parallel",

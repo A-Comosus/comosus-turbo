@@ -1,4 +1,4 @@
-import { Logger } from '@nestjs/common';
+import { Logger, ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { ExpressAdapter } from '@nestjs/platform-express';
 import { Context } from 'aws-lambda';
@@ -6,11 +6,14 @@ import { createServer, proxy, Response } from 'aws-serverless-express';
 import express, { Express } from 'express';
 import { Server } from 'http';
 import { AppModule } from '@src/module/app';
+import { ConfigService } from '@src/system/config';
+import { LoggerService } from '@src/system/logger';
+import { PrismaKnownErrorFilter, PrismaService } from '@src/system/prisma';
 import {
-  ConfigService,
-  LoggerService,
-  PrismaService,
-} from '@src/module/system';
+  GlobalExceptionFilter,
+  UnauthorizedExceptionFilter,
+} from '@src/system/filter';
+import 'json-bigint-patch';
 
 let cachedServer: Server;
 
@@ -20,9 +23,19 @@ async function createExpressApp(expressApp: Express) {
   const app = await NestFactory.create(
     AppModule,
     new ExpressAdapter(expressApp),
+    {
+      cors: {
+        origin: ['http://localhost:3000'],
+      },
+    },
   );
 
   app.useLogger(app.get(LoggerService));
+
+  app.useGlobalPipes(new ValidationPipe({ transform: true }));
+  app.useGlobalFilters(new GlobalExceptionFilter());
+  app.useGlobalFilters(new PrismaKnownErrorFilter());
+  app.useGlobalFilters(new UnauthorizedExceptionFilter());
 
   const prismaService = app.get(PrismaService);
   await prismaService.enableShutdownHook(app);
