@@ -33,6 +33,20 @@ export function ResponseSuccess<TData>(classRef: Type<TData>) {
 }
 
 @ObjectType()
+export class ResponseSuccessWithoutData {
+  @Field()
+  result: 'success';
+
+  @Field()
+  message: string;
+
+  constructor(message: string) {
+    this.result = 'success';
+    this.message = message;
+  }
+}
+
+@ObjectType()
 export class ResponseWarning {
   @Field()
   result: 'warning';
@@ -62,13 +76,13 @@ export function resolveResponse<TSuccess, TWarning, TError>({
   onErrorClassRef,
 }: {
   result: 'success' | 'warning' | 'error';
-  onSuccessClassRef: Type<TSuccess>;
+  onSuccessClassRef?: Type<TSuccess>;
   onWarningClassRef?: Type<TWarning>;
   onErrorClassRef?: Type<TError>;
 }) {
   switch (result) {
     case 'success':
-      return onSuccessClassRef ?? ResponseSuccess(null);
+      return onSuccessClassRef ?? ResponseSuccessWithoutData;
     case 'warning':
       return onWarningClassRef ?? ResponseWarning;
     case 'error':

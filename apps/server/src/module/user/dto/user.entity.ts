@@ -1,8 +1,9 @@
 import { Field, ObjectType, OmitType } from '@nestjs/graphql';
 import { BigIntResolver } from 'graphql-scalars';
+import { User as DBUser } from '@prisma/client';
 
 @ObjectType()
-class User {
+class User implements DBUser {
   @Field(() => BigIntResolver)
   id: bigint;
 
@@ -14,6 +15,12 @@ class User {
 
   @Field()
   password: string;
+
+  @Field()
+  acceptTerms: boolean;
+
+  @Field()
+  status: string;
 
   @Field()
   createdAt: Date;

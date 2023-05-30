@@ -2,13 +2,24 @@ import { Injectable, Logger } from '@nestjs/common';
 import {
   LoginInput,
   LoginSuccess,
+  StartVerificationInput,
   RegisterInput,
   RegisterSuccess,
+  VerifyUserInput,
 } from './dto';
 import { JwtService } from '@nestjs/jwt';
 import { UserService } from '@src/module/user';
-import { ResponseError } from '@src/utils';
+import { ResponseSuccessWithoutData, ResponseError } from '@src/utils';
 import bcrypt from 'bcrypt';
+import { ExternalService } from '@src/system/external';
+import { ConfigService } from '@src/system/config';
+import { User } from '@prisma/client';
+
+type JwtPayload = {
+  id: string;
+  email: string;
+  username: string;
+};
 
 @Injectable()
 export class AuthService {
@@ -16,11 +27,40 @@ export class AuthService {
 
   constructor(
     private jwtService: JwtService,
+    private configService: ConfigService,
     private userService: UserService,
+    private externalService: ExternalService,
   ) {}
 
-  private async generateJWT(payload: string | object | Buffer) {
-    return await this.jwtService.signAsync(payload);
+  private async generateJWT({
+    user,
+    options,
+  }: {
+    user: User;
+    options?: Partial<{
+      expiresIn: number;
+      secret: string;
+    }>;
+  }) {
+    const payload: JwtPayload = {
+      id: user.id.toString(),
+      email: user.email,
+      username: user.username,
+    };
+
+    return await this.jwtService.signAsync(payload, {
+      ...options,
+    });
+  }
+
+  private async verifyJWT({
+    token,
+    secret,
+  }: {
+    token: string;
+    secret: string;
+  }): Promise<JwtPayload> {
+    return await this.jwtService.verifyAsync(token, { secret });
   }
 
   async register(input: RegisterInput) {
@@ -31,10 +71,10 @@ export class AuthService {
     const user = await this.userService.create({ ...input, password });
 
     const accessToken = await this.generateJWT({
-      sub: user.id,
-      email: user.email,
-      username: user.username,
+      user,
     });
+
+    this.startVerification(user);
 
     return new RegisterSuccess('Registration successful', {
       accessToken,
@@ -50,14 +90,63 @@ export class AuthService {
     if (!isValidLogin) return new ResponseError(`Credential does not match`);
 
     const accessToken = await this.generateJWT({
-      sub: user.id,
-      email: user.email,
-      username: user.username,
+      user,
     });
 
     return new LoginSuccess('Login successful', {
       accessToken,
       user,
     });
+  }
+
+  async startVerification({ email }: StartVerificationInput) {
+    const user = await this.userService.findOneByEmail(email);
+    if (!user)
+      return new ResponseError(`No user is associated with the email provided`);
+
+    const oneTimeToken = await this.generateJWT({
+      user,
+      options: {
+        expiresIn: 60 * 60 * 24,
+        secret: this.configService.oneTimeTokenSecret,
+      },
+    });
+
+    const verificationLink = `${this.configService.clientBaseUrl}/account/verify-email?token=${oneTimeToken}`;
+
+    this.externalService.sendPlainEmail({
+      from: this.configService.senderEmailAddress,
+      to: user.email,
+      subject: 'Suppose to be verification email',
+      body: `
+      Hey there!
+
+      <a href="${verificationLink}">Click here to verify your email</a>
+      `,
+    });
+
+    return new ResponseSuccessWithoutData('New verification email sent!');
+  }
+
+  async verifyUser({ token }: VerifyUserInput) {
+    const { email } = await this.verifyJWT({
+      token,
+      secret: this.configService.oneTimeTokenSecret,
+    });
+
+    const user = await this.userService.findOneByEmail(email);
+    if (!user)
+      return new ResponseError(`No user is associated with the email provided`);
+
+    this.userService.update({
+      where: {
+        email,
+      },
+      data: {
+        status: 'VERIFIED',
+      },
+    });
+
+    return new ResponseSuccessWithoutData('User has been verified');
   }
 }

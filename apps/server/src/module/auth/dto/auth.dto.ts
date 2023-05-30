@@ -1,6 +1,11 @@
 import { Field, InputType, ObjectType, createUnionType } from '@nestjs/graphql';
 import { UserDTO } from '@src/module/user';
-import { ResponseError, ResponseSuccess, resolveResponse } from '@src/utils';
+import {
+  ResponseError,
+  ResponseSuccess,
+  ResponseSuccessWithoutData,
+  resolveResponse,
+} from '@src/utils';
 import { IsBoolean, IsEmail, IsNotEmpty, Matches } from 'class-validator';
 
 @InputType()
@@ -49,7 +54,6 @@ export const RegisterResponseDTO = createUnionType({
     resolveResponse({
       result,
       onSuccessClassRef: RegisterSuccess,
-      onErrorClassRef: ResponseError,
     }),
 });
 
@@ -63,6 +67,37 @@ export const LoginResponseDTO = createUnionType({
     resolveResponse({
       result,
       onSuccessClassRef: LoginSuccess,
-      onErrorClassRef: ResponseError,
+    }),
+});
+
+@InputType()
+export class StartVerificationInput {
+  @Field()
+  @IsEmail()
+  email: string;
+}
+
+export const StartVerificationResponseDTO = createUnionType({
+  name: 'StartVerificationResponse',
+  types: () => [ResponseSuccessWithoutData, ResponseError] as const,
+  resolveType: ({ result }) =>
+    resolveResponse({
+      result,
+    }),
+});
+
+@InputType()
+export class VerifyUserInput {
+  @Field()
+  @IsNotEmpty()
+  token: string;
+}
+
+export const VerificationResponseDTO = createUnionType({
+  name: 'VerificationResponse',
+  types: () => [ResponseSuccessWithoutData, ResponseError] as const,
+  resolveType: ({ result }) =>
+    resolveResponse({
+      result,
     }),
 });

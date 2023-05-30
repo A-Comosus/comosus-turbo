@@ -21,6 +21,9 @@ export function validate(config: Record<string, unknown>) {
       IS_OFFLINE: z.string().default('false'),
       DATABASE_URL: z.string(),
       JWT_SECRET: z.string(),
+      SENDER_EMAIL_ADDRESS: z.string(),
+      ONE_TIME_TOKEN_SECRET: z.string(),
+      CLIENT_BASE_URL: z.string(),
     });
 
     return schema.parse(config);

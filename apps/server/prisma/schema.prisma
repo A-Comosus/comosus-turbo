@@ -16,6 +16,7 @@ model User {
   username String? @unique
   password String
   acceptTerms Boolean
+  status String @default("UNVERIFIED")
   createdAt DateTime
   updatedAt DateTime
 }

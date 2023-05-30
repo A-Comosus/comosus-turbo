@@ -3,8 +3,12 @@ import { AuthService } from './auth.service';
 import {
   LoginInput,
   LoginResponseDTO,
+  StartVerificationInput,
   RegisterInput,
   RegisterResponseDTO,
+  StartVerificationResponseDTO,
+  VerificationResponseDTO,
+  VerifyUserInput,
 } from './dto';
 
 @Resolver()
@@ -19,5 +23,15 @@ export class AuthResolver {
   @Mutation(() => LoginResponseDTO)
   login(@Args('input') input: LoginInput) {
     return this.authService.login(input);
+  }
+
+  @Mutation(() => StartVerificationResponseDTO)
+  restartVerification(@Args('input') input: StartVerificationInput) {
+    return this.authService.startVerification(input);
+  }
+
+  @Mutation(() => VerificationResponseDTO)
+  verifyUser(@Args('input') input: VerifyUserInput) {
+    return this.authService.verifyUser(input);
   }
 }
