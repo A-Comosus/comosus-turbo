@@ -85,6 +85,8 @@ export type Mutation = {
   deleteUser: DeleteUserDto;
   login: LoginResponse;
   register: RegisterResponse;
+  restartVerification: StartVerificationResponse;
+  verifyUser: VerificationResponse;
 };
 
 
@@ -100,6 +102,16 @@ export type MutationLoginArgs = {
 
 export type MutationRegisterArgs = {
   input: RegisterInput;
+};
+
+
+export type MutationRestartVerificationArgs = {
+  input: StartVerificationInput;
+};
+
+
+export type MutationVerifyUserArgs = {
+  input: VerifyUserInput;
 };
 
 export type Query = {
@@ -129,13 +141,33 @@ export type ResponseError = {
   result: Scalars['String'];
 };
 
+export type ResponseSuccessWithoutData = {
+  __typename?: 'ResponseSuccessWithoutData';
+  message: Scalars['String'];
+  result: Scalars['String'];
+};
+
+export type StartVerificationInput = {
+  email: Scalars['String'];
+};
+
+export type StartVerificationResponse = ResponseError | ResponseSuccessWithoutData;
+
 export type UserDto = {
   __typename?: 'UserDTO';
+  acceptTerms: Scalars['Boolean'];
   createdAt: Scalars['DateTime'];
   email: Scalars['String'];
   id: Scalars['BigInt'];
+  status: Scalars['String'];
   updatedAt: Scalars['DateTime'];
   username?: Maybe<Scalars['String']>;
+};
+
+export type VerificationResponse = ResponseError | ResponseSuccessWithoutData;
+
+export type VerifyUserInput = {
+  token: Scalars['String'];
 };
 
 export type RegisterMutationVariables = Exact<{
@@ -143,14 +175,28 @@ export type RegisterMutationVariables = Exact<{
 }>;
 
 
-export type RegisterMutation = { __typename?: 'Mutation', register: { __typename: 'RegisterSuccess', result: string, message: string, data: { __typename?: 'Authenticated', accessToken: string, user: { __typename?: 'UserDTO', id: any, email: string, username?: string | null, createdAt: any, updatedAt: any } } } | { __typename: 'ResponseError', result: string, message: string } };
+export type RegisterMutation = { __typename?: 'Mutation', register: { __typename: 'RegisterSuccess', result: string, message: string, data: { __typename?: 'Authenticated', accessToken: string, user: { __typename?: 'UserDTO', id: any, email: string, username?: string | null, status: string, acceptTerms: boolean, createdAt: any, updatedAt: any } } } | { __typename: 'ResponseError', result: string, message: string } };
 
 export type LoginMutationVariables = Exact<{
   input: LoginInput;
 }>;
 
 
-export type LoginMutation = { __typename?: 'Mutation', login: { __typename: 'LoginSuccess', result: string, message: string, data: { __typename?: 'Authenticated', accessToken: string, user: { __typename?: 'UserDTO', id: any, email: string, username?: string | null, createdAt: any, updatedAt: any } } } | { __typename: 'ResponseError', result: string, message: string } };
+export type LoginMutation = { __typename?: 'Mutation', login: { __typename: 'LoginSuccess', result: string, message: string, data: { __typename?: 'Authenticated', accessToken: string, user: { __typename?: 'UserDTO', id: any, email: string, username?: string | null, status: string, acceptTerms: boolean, createdAt: any, updatedAt: any } } } | { __typename: 'ResponseError', result: string, message: string } };
+
+export type RestartVerificationMutationVariables = Exact<{
+  input: StartVerificationInput;
+}>;
+
+
+export type RestartVerificationMutation = { __typename?: 'Mutation', restartVerification: { __typename: 'ResponseError', result: string, message: string } | { __typename: 'ResponseSuccessWithoutData', result: string, message: string } };
+
+export type VerifyUserMutationVariables = Exact<{
+  input: VerifyUserInput;
+}>;
+
+
+export type VerifyUserMutation = { __typename?: 'Mutation', verifyUser: { __typename: 'ResponseError', result: string, message: string } | { __typename: 'ResponseSuccessWithoutData', result: string, message: string } };
 
 
 export const RegisterDocument = `
@@ -166,6 +212,8 @@ export const RegisterDocument = `
           id
           email
           username
+          status
+          acceptTerms
           createdAt
           updatedAt
         }
@@ -204,6 +252,8 @@ export const LoginDocument = `
           id
           email
           username
+          status
+          acceptTerms
           createdAt
           updatedAt
         }
@@ -227,5 +277,61 @@ export const useLoginMutation = <
     useMutation<LoginMutation, TError, LoginMutationVariables, TContext>(
       ['Login'],
       (variables?: LoginMutationVariables) => fetcher<LoginMutation, LoginMutationVariables>(client, LoginDocument, variables, headers)(),
+      options
+    );
+export const RestartVerificationDocument = `
+    mutation RestartVerification($input: StartVerificationInput!) {
+  restartVerification(input: $input) {
+    __typename
+    ... on ResponseSuccessWithoutData {
+      result
+      message
+    }
+    ... on ResponseError {
+      result
+      message
+    }
+  }
+}
+    `;
+export const useRestartVerificationMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(
+      client: GraphQLClient,
+      options?: UseMutationOptions<RestartVerificationMutation, TError, RestartVerificationMutationVariables, TContext>,
+      headers?: RequestInit['headers']
+    ) =>
+    useMutation<RestartVerificationMutation, TError, RestartVerificationMutationVariables, TContext>(
+      ['RestartVerification'],
+      (variables?: RestartVerificationMutationVariables) => fetcher<RestartVerificationMutation, RestartVerificationMutationVariables>(client, RestartVerificationDocument, variables, headers)(),
+      options
+    );
+export const VerifyUserDocument = `
+    mutation VerifyUser($input: VerifyUserInput!) {
+  verifyUser(input: $input) {
+    __typename
+    ... on ResponseSuccessWithoutData {
+      result
+      message
+    }
+    ... on ResponseError {
+      result
+      message
+    }
+  }
+}
+    `;
+export const useVerifyUserMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(
+      client: GraphQLClient,
+      options?: UseMutationOptions<VerifyUserMutation, TError, VerifyUserMutationVariables, TContext>,
+      headers?: RequestInit['headers']
+    ) =>
+    useMutation<VerifyUserMutation, TError, VerifyUserMutationVariables, TContext>(
+      ['VerifyUser'],
+      (variables?: VerifyUserMutationVariables) => fetcher<VerifyUserMutation, VerifyUserMutationVariables>(client, VerifyUserDocument, variables, headers)(),
       options
     );

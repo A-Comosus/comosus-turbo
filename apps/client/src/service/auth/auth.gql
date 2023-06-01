@@ -10,6 +10,8 @@ mutation Register($input: RegisterInput!) {
           id
           email
           username
+          status
+          acceptTerms
           createdAt
           updatedAt
         }
@@ -34,10 +36,40 @@ mutation Login($input: LoginInput!) {
           id
           email
           username
+          status
+          acceptTerms
           createdAt
           updatedAt
         }
       }
+    }
+    ... on ResponseError {
+      result
+      message
+    }
+  }
+}
+
+mutation RestartVerification($input: StartVerificationInput!) {
+  restartVerification(input: $input) {
+    __typename
+    ... on ResponseSuccessWithoutData {
+      result
+      message
+    }
+    ... on ResponseError {
+      result
+      message
+    }
+  }
+}
+
+mutation VerifyUser($input: VerifyUserInput!) {
+  verifyUser(input: $input) {
+    __typename
+    ... on ResponseSuccessWithoutData {
+      result
+      message
     }
     ... on ResponseError {
       result
