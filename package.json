@@ -22,6 +22,7 @@
     "test:watch": "turbo run test:watch --parallel",
     "test:ci": "turbo run test:ci --parallel",
     "sls:offline": "turbo run offline --filter=@comosus/server",
+    "docker-compose:init": "turbo run docker-compose:init",
     "docker-compose:up": "turbo run docker-compose:up",
     "docker-compose:down": "turbo run docker-compose:down"
   },
