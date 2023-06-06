@@ -10,7 +10,7 @@
     "prebuild": "rimraf dist",
     "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
-    "docker-compose:init": "sh compose.sh -i",
+    "docker-compose:init": "sh compose.sh -i && yarn db:push",
     "docker-compose:up": "sh compose.sh",
     "docker-compose:down": "docker compose down",
     "db:generate": "prisma generate",
