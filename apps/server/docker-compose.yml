@@ -1,4 +1,5 @@
 version: '3.3'
+name: comosus-db
 services:
   cockroach-0:
     image: cockroachdb/cockroach:latest
