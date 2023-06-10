@@ -2,6 +2,7 @@ import { Injectable, Logger, UseFilters } from '@nestjs/common';
 import { PrismaKnownErrorFilter, PrismaService } from '@src/system/prisma';
 import { RegisterInput } from '../auth/dto';
 import { DeleteUserDTO, DeleteUserInput, FindAllUserSuccess } from './dto';
+import type { User } from '@prisma/client';
 
 @Injectable()
 @UseFilters(PrismaKnownErrorFilter)
@@ -20,6 +21,24 @@ export class UserService {
       },
     });
     this.logger.debug(`New user created with email ${newUser.email}...`);
+    return user;
+  }
+
+  async update({
+    where,
+    data,
+  }: {
+    where: {
+      email: string;
+    };
+    data: Partial<User>;
+  }) {
+    this.logger.debug(`Updating new user with email ${where.email}`);
+    const user = await this.prismaService.user.update({
+      where,
+      data,
+    });
+
     return user;
   }
 
