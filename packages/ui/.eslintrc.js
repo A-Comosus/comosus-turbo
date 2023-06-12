@@ -3,7 +3,8 @@ module.exports = {
   root: true,
   settings: {
     next: {
-      rootDir: ['apps/*/'],
-    },
+      rootDir: ['apps/*/']
+    }
   },
+  extends: ['plugin:storybook/recommended']
 };
