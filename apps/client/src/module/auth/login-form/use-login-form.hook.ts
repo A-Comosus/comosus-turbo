@@ -1,5 +1,5 @@
-import { LoginInput } from '@src/.generated/graphql.api';
-import { useLoginService } from '@src/service';
+import { LoginInput } from '../../../.generated/graphql.api';
+import { useLoginService } from '../../../service';
 import { useForm } from 'react-hook-form';
 import { resolver } from './login-form.schema';
 

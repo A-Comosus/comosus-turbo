@@ -1,5 +1,9 @@
 import { ObjectType, Field, InputType, createUnionType } from '@nestjs/graphql';
-import { ResponseError, ResponseSuccess, resolveResponse } from '@src/utils';
+import {
+  ResponseError,
+  ResponseSuccess,
+  resolveResponse,
+} from '../../../utils';
 import { UserDTO } from './user.entity';
 import { Type } from '@nestjs/common';
 

@@ -5,14 +5,14 @@ import { Context } from 'aws-lambda';
 import { createServer, proxy, Response } from 'aws-serverless-express';
 import express, { Express } from 'express';
 import { Server } from 'http';
-import { AppModule } from '@src/module/app';
-import { ConfigService } from '@src/system/config';
-import { LoggerService } from '@src/system/logger';
-import { PrismaKnownErrorFilter, PrismaService } from '@src/system/prisma';
+import { AppModule } from './module/app';
+import { ConfigService } from './system/config';
+import { LoggerService } from './system/logger';
+import { PrismaKnownErrorFilter, PrismaService } from './system/prisma';
 import {
   GlobalExceptionFilter,
   UnauthorizedExceptionFilter,
-} from '@src/system/filter';
+} from './system/filter';
 import 'json-bigint-patch';
 
 let cachedServer: Server;

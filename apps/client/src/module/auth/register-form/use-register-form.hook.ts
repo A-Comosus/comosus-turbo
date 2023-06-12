@@ -1,7 +1,7 @@
 import { useForm } from 'react-hook-form';
 import { resolver } from './use-register-form.schema';
-import { RegisterInput } from '@src/.generated/graphql.api';
-import { useRegisterService } from '@src/service';
+import { RegisterInput } from '../../../.generated/graphql.api';
+import { useRegisterService } from '../../../service';
 
 export function useRegisterForm() {
   const { register, isRegistering, registerError } = useRegisterService({

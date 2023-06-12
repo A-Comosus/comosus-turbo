@@ -4,7 +4,7 @@ import {
   UnauthorizedException,
   Logger,
 } from '@nestjs/common';
-import { ResponseError } from '@src/utils';
+import { ResponseError } from '../../utils';
 
 @Catch(UnauthorizedException)
 export class UnauthorizedExceptionFilter implements ExceptionFilter {

@@ -1,11 +1,12 @@
 {
   "extends": "@comosus/config-ts/react-library",
-  "compilerOptions": {
-    "baseUrl": "./",
-    "paths": {
-      "@src/*": ["./src/*"]
-    }
-  },
-  "include": [".", "./src/types/svg.d.ts"],
-  "exclude": ["dist", "build", "node_modules"]
+  "include": [
+    ".",
+    "./src/types/svg.d.ts"
+  ],
+  "exclude": [
+    "dist",
+    "build",
+    "node_modules"
+  ]
 }

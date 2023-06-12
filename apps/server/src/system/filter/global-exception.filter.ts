@@ -1,5 +1,5 @@
 import { Catch, ExceptionFilter, Logger } from '@nestjs/common';
-import { ResponseError } from '@src/utils';
+import { ResponseError } from '../../utils';
 
 @Catch()
 export class GlobalExceptionFilter implements ExceptionFilter {

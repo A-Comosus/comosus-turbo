@@ -1,4 +1,4 @@
-import { Like } from '@src/component';
+import { Like } from '../component';
 import { Button } from '@comosus/ui';
 
 export default function Web() {

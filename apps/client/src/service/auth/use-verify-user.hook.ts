@@ -2,10 +2,10 @@
 import {
   ResponseSuccessWithoutData,
   ResponseError,
-} from '@src/.generated/graphql.api';
+} from '../../.generated/graphql.api';
 import { ServiceHook } from '..';
-import { useVerifyUserMutation } from '@src/.generated/graphql.api';
-import { useAPIClientStore } from '@src/store';
+import { useVerifyUserMutation } from '../../.generated/graphql.api';
+import { useAPIClientStore } from '../../store';
 import { useState } from 'react';
 
 export function useVerifyUserService(

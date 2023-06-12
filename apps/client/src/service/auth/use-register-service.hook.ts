@@ -1,8 +1,8 @@
 'use client';
-import { RegisterSuccess } from '@src/.generated/graphql.api';
-import { ResponseError } from '@src/.generated/graphql.api';
-import { useRegisterMutation } from '@src/.generated/graphql.api';
-import { useAPIClientStore } from '@src/store';
+import { RegisterSuccess } from '../../.generated/graphql.api';
+import { ResponseError } from '../../.generated/graphql.api';
+import { useRegisterMutation } from '../../.generated/graphql.api';
+import { useAPIClientStore } from '../../store';
 import { useState } from 'react';
 import { ServiceHook } from '..';
 

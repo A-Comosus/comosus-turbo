@@ -2,9 +2,9 @@ import { Module } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { AuthResolver } from './auth.resolver';
 import { JwtModule } from '@nestjs/jwt';
-import { ConfigModule, ConfigService } from '@src/system/config';
-import { UserModule } from '@src/module/user';
-import { ExternalModule } from '@src/system/external';
+import { ConfigModule, ConfigService } from '../../system/config';
+import { UserModule } from '../../module/user';
+import { ExternalModule } from '../../system/external';
 
 @Module({
   providers: [AuthResolver, AuthService],

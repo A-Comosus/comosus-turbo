@@ -1,4 +1,4 @@
-import { ErrorMessage } from '@src/display';
+import { ErrorMessage } from '../../display';
 import * as RadixCheckbox from '@radix-ui/react-checkbox';
 import { VariantProps, cva } from 'class-variance-authority';
 import { Icon } from '@iconify/react';

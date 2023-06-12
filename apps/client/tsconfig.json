@@ -1,12 +1,6 @@
 {
   "extends": "@comosus/config-ts/nextjs",
   "compilerOptions": {
-    "baseUrl": "./",
-    "paths": {
-      "@src/*": [
-        "./src/*"
-      ]
-    },
     "plugins": [
       {
         "name": "next"

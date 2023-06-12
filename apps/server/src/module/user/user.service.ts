@@ -1,5 +1,5 @@
 import { Injectable, Logger, UseFilters } from '@nestjs/common';
-import { PrismaKnownErrorFilter, PrismaService } from '@src/system/prisma';
+import { PrismaKnownErrorFilter, PrismaService } from '../../system/prisma';
 import { RegisterInput } from '../auth/dto';
 import { DeleteUserDTO, DeleteUserInput, FindAllUserSuccess } from './dto';
 import type { User } from '@prisma/client';

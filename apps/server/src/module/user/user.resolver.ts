@@ -2,7 +2,7 @@ import { Resolver, Query, Mutation, Args } from '@nestjs/graphql';
 import { UserService } from './user.service';
 import { DeleteUserDTO, DeleteUserInput, FindAllUserDTO, UserDTO } from './dto';
 import { Logger, UseGuards } from '@nestjs/common';
-import { JwtGuard } from '@src/system/guard';
+import { JwtGuard } from '../../system/guard';
 
 @Resolver(() => UserDTO)
 @UseGuards(JwtGuard)

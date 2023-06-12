@@ -1,5 +1,5 @@
 'use client';
-import { useVerifyUserService } from '@src/service';
+import { useVerifyUserService } from '../../../service';
 import { useSearchParams } from 'next/navigation';
 import { useEffect } from 'react';
 

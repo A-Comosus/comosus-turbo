@@ -1,5 +1,5 @@
 'use client';
-import { useAPIClientStore } from '@src/store';
+import { useAPIClientStore } from '../store';
 import { QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import React from 'react';

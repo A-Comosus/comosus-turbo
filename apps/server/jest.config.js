@@ -6,9 +6,6 @@ const config = {
     '^.+\\.(t|j)s$': 'ts-jest',
   },
   moduleDirectories: ['node_modules', '<rootDir>/'],
-  moduleNameMapper: {
-    '^@src/(.*)$': ['<rootDir>/$1'],
-  },
   coverageDirectory: '../coverage',
   collectCoverageFrom: [
     '<rootDir>/**/*.module.ts',

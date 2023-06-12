@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { AppResponseDTO, AppResponseSuccess } from './dto';
-import { ResponseError } from '@src/utils';
+import { ResponseError } from '../../utils';
 
 @Injectable()
 export class AppService {

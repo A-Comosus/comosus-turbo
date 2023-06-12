@@ -1,7 +1,7 @@
 import { InputHTMLAttributes } from 'react';
 import { cva, VariantProps } from 'class-variance-authority';
 import { HiXCircle } from 'react-icons/hi';
-import { ErrorMessage } from '@src/display';
+import { ErrorMessage } from '../../display';
 
 type TextInputProps = {
   label?: React.ReactNode;

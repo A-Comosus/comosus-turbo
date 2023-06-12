@@ -1,8 +1,8 @@
-import { Navbar } from '@src/component';
+import { Navbar } from '../component';
 
 import '@comosus/ui/styles.css';
-import '@src/styles/globals.css';
-import { QueryClientContainer } from '@src/service';
+import '../styles/globals.css';
+import { QueryClientContainer } from '../service';
 
 export default function RootLayout({
   children,

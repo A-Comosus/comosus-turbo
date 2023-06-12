@@ -2,7 +2,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { UserResolver } from '../user.resolver';
 import { UserService } from '../user.service';
 import { JwtService } from '@nestjs/jwt';
-import { ConfigService } from '@src/system/config';
+import { ConfigService } from '../../../system/config';
 
 describe('UserResolver', () => {
   let resolver: UserResolver;

@@ -1,11 +1,11 @@
 import { Field, InputType, ObjectType, createUnionType } from '@nestjs/graphql';
-import { UserDTO } from '@src/module/user';
+import { UserDTO } from '../../../module/user';
 import {
   ResponseError,
   ResponseSuccess,
   ResponseSuccessWithoutData,
   resolveResponse,
-} from '@src/utils';
+} from '../../../utils';
 import { IsBoolean, IsEmail, IsNotEmpty, Matches } from 'class-validator';
 
 @InputType()

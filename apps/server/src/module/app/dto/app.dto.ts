@@ -1,5 +1,9 @@
 import { Field, ObjectType, createUnionType } from '@nestjs/graphql';
-import { ResponseError, ResponseSuccess, resolveResponse } from '@src/utils';
+import {
+  ResponseError,
+  ResponseSuccess,
+  resolveResponse,
+} from '../../../utils';
 
 @ObjectType()
 class App {

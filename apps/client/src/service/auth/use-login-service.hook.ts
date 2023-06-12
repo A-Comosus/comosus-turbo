@@ -3,8 +3,8 @@ import {
   LoginSuccess,
   ResponseError,
   useLoginMutation,
-} from '@src/.generated/graphql.api';
-import { useAPIClientStore } from '@src/store';
+} from '../../.generated/graphql.api';
+import { useAPIClientStore } from '../../store';
 import { useState } from 'react';
 import { ServiceHook } from '..';
 

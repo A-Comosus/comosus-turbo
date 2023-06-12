@@ -8,11 +8,11 @@ import {
   VerifyUserInput,
 } from './dto';
 import { JwtService } from '@nestjs/jwt';
-import { UserService } from '@src/module/user';
-import { ResponseSuccessWithoutData, ResponseError } from '@src/utils';
+import { UserService } from '../../module/user';
+import { ResponseSuccessWithoutData, ResponseError } from '../../utils';
 import bcrypt from 'bcrypt';
-import { ExternalService } from '@src/system/external';
-import { ConfigService } from '@src/system/config';
+import { ExternalService } from '../../system/external';
+import { ConfigService } from '../../system/config';
 import { User } from '@prisma/client';
 
 type JwtPayload = {
