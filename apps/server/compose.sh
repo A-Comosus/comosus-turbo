@@ -26,6 +26,6 @@ initReplica() {
 
 compose
 
-if [ "$INIT" == true ]; then
+if [ "$INIT" = true ]; then
   initReplica
 fi
