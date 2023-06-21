@@ -16,7 +16,6 @@
     "build-storybook": "build-storybook",
     "build": "tsup",
     "dev": "concurrently \"yarn:dev:*\"",
-    "storybook": "concurrently \"yarn:dev:*\"",
     "dev:storybook": "start-storybook -p 6006",
     "dev:tailwind": "tsup --watch",
     "type-check": "tsc --project tsconfig.json --pretty --noEmit",
